@@ -1,0 +1,121 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    --background: 15 23 42; /* slate-900 */
+    --foreground: 248 250 252; /* slate-50 */
+
+    --card: 30 41 59; /* slate-800 */
+    --card-foreground: 248 250 252; /* slate-50 */
+
+    --popover: 30 41 59; /* slate-800 */
+    --popover-foreground: 248 250 252; /* slate-50 */
+
+    --primary: 37 99 235; /* blue-600 */
+    --primary-foreground: 248 250 252; /* slate-50 */
+
+    --secondary: 51 65 85; /* slate-600 */
+    --secondary-foreground: 248 250 252; /* slate-50 */
+
+    --muted: 51 65 85; /* slate-600 */
+    --muted-foreground: 148 163 184; /* slate-400 */
+
+    --accent: 59 130 246; /* blue-500 */
+    --accent-foreground: 248 250 252; /* slate-50 */
+
+    --destructive: 239 68 68; /* red-500 */
+    --destructive-foreground: 248 250 252; /* slate-50 */
+
+    --border: 71 85 105; /* slate-600 */
+    --input: 71 85 105; /* slate-600 */
+    --ring: 59 130 246; /* blue-500 */
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 15 23 42; /* slate-900 */
+    --sidebar-foreground: 203 213 225; /* slate-300 */
+    --sidebar-primary: 37 99 235; /* blue-600 */
+    --sidebar-primary-foreground: 248 250 252; /* slate-50 */
+    --sidebar-accent: 51 65 85; /* slate-600 */
+    --sidebar-accent-foreground: 248 250 252; /* slate-50 */
+    --sidebar-border: 71 85 105; /* slate-600 */
+    --sidebar-ring: 59 130 246; /* blue-500 */
+  }
+
+  .dark {
+    --background: 15 23 42; /* slate-900 */
+    --foreground: 248 250 252; /* slate-50 */
+
+    --card: 30 41 59; /* slate-800 */
+    --card-foreground: 248 250 252; /* slate-50 */
+
+    --popover: 30 41 59; /* slate-800 */
+    --popover-foreground: 248 250 252; /* slate-50 */
+
+    --primary: 37 99 235; /* blue-600 */
+    --primary-foreground: 248 250 252; /* slate-50 */
+
+    --secondary: 51 65 85; /* slate-600 */
+    --secondary-foreground: 248 250 252; /* slate-50 */
+
+    --muted: 51 65 85; /* slate-600 */
+    --muted-foreground: 148 163 184; /* slate-400 */
+
+    --accent: 59 130 246; /* blue-500 */
+    --accent-foreground: 248 250 252; /* slate-50 */
+
+    --destructive: 239 68 68; /* red-500 */
+    --destructive-foreground: 248 250 252; /* slate-50 */
+
+    --border: 71 85 105; /* slate-600 */
+    --input: 71 85 105; /* slate-600 */
+    --ring: 59 130 246; /* blue-500 */
+    
+    --sidebar-background: 15 23 42; /* slate-900 */
+    --sidebar-foreground: 203 213 225; /* slate-300 */
+    --sidebar-primary: 37 99 235; /* blue-600 */
+    --sidebar-primary-foreground: 248 250 252; /* slate-50 */
+    --sidebar-accent: 51 65 85; /* slate-600 */
+    --sidebar-accent-foreground: 248 250 252; /* slate-50 */
+    --sidebar-border: 71 85 105; /* slate-600 */
+    --sidebar-ring: 59 130 246; /* blue-500 */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+*{
+font-family: "Prompt", sans-serif;
+}
