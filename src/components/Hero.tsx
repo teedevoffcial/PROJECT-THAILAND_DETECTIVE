@@ -11,7 +11,7 @@ const Hero = () => {
         <div 
           className="absolute top-0 right-0 w-1/2 h-full bg-cover bg-center opacity-20"
           style={{
-            backgroundImage: "url('public/images/image9.jpg')",
+            backgroundImage: "url('/images/image9.jpg')",
             clipPath: "polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)"
           }}
         ></div>

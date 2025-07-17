@@ -14,7 +14,7 @@ const SpecialServices = () => {
       title: "Cheating",
       subtitle: "สืบสวนความสัมพันธ์",
       description: "ติดตามสืบหาความสัมพันธ์ พฤติกรรม การชู้สาว สืบหาหลักฐาน เก็บหลักฐานทั้งรูปภาพและวีดิโอ เบอร์โทรศัพท์ และข้อมูลมือที่สาม",
-      image: "public/images/image8.png",
+      image: "/images/image8.png",
       features: [
         "ติดตามสืบหาความสัมพันธ์",
         "สืบหาพฤติกรรมการชู้สาว",
@@ -30,7 +30,7 @@ const SpecialServices = () => {
       title: "Missing Person",
       subtitle: "ติดตามบุคคลสูญหาย",
       description: "ติดตามบุคคลสูญหาย ติดต่อไม่ได้ การเดินทางครั้งล่าสุด และพฤติกรรม",
-      image: "public/images/image9.jpg",
+      image: "/images/image9.jpg",
       features: [
         "ติดตามบุคคลสูญหาย",
         "สืบหาบุคคลที่ติดต่อไม่ได้",
@@ -46,7 +46,7 @@ const SpecialServices = () => {
       title: "Background Checks",
       subtitle: "ตรวจสอบประวัติบุคคล",
       description: "ตรวจสอบประวัติบุคคลย้อนหลัง หาหลักฐานเพิ่มเติมเกี่ยวกับบุคคล",
-      image: "public/images/image10.jpg",
+      image: "/images/image10.jpg",
       features: [
         "ตรวจสอบประวัติบุคคลย้อนหลัง",
         "หาหลักฐานเพิ่มเติมเกี่ยวกับบุคคล",
