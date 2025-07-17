@@ -18,25 +18,25 @@ const Services = () => {
       icon: Heart,
       title: "สืบสวนคู่รัก",
       description: "ตรวจสอบความจริงใจของคู่รัก การนอกใจ และพฤติกรรมต้องสงสัย",
-      image: "/public/images/image3.png"
+      image: "/images/image3.png"
     },
     {
       icon: Users,
       title: "สืบสวนบุคคล",
       description: "ค้นหาตัวตน ประวัติ และข้อมูลส่วนตัวของบุคคลที่ต้องการ",
-      image: "/public/images/image4.png"
+      image: "/images/image4.png"
     },
     {
       icon: FileText,
       title: "ตรวจสอบเอกสาร",
       description: "ยืนยันความถูกต้องของเอกสารสำคัญ และหลักฐานต่างๆ",
-      image: "/public/images/image5.png"
+      image: "/images/image5.png"
     },
     {
       icon: Shield,
       title: "รักษาความปลอดภัย",
       description: "บริการคุ้มครองบุคคลสำคัญ และให้คำปรึกษาด้านความปลอดภัย",
-      image: "/public/images/image6.png"
+      image: "/images/image6.png"
     },
     {
       icon: Camera,

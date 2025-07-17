@@ -48,7 +48,7 @@ const About = () => {
             {/* Professional Team Image */}
             <div className="relative mb-8">
               <img 
-                src="/public/images/image12.jpg"
+                src="/images/image12.jpg"
                 alt="Professional Team"
                 className="w-full h-64 object-cover rounded-lg shadow-lg"
               />
