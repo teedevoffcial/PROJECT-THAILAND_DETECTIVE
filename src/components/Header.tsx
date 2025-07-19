@@ -8,8 +8,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <a href="/">
-              <img src="/images/logo-b.png" height={250} width={250}></img>
+            <a href="/" className="text-2xl">คุณติ้กนักสืบ
             </a>
           </div>
           
