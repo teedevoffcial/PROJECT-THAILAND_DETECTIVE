@@ -2,310 +2,240 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Calendar, User, Tag, Search, ArrowLeft, Filter, Grid, List } from 'lucide-react';
+import { Calendar, User, Tag, ArrowRight, Clock, BookOpen } from 'lucide-react';
 import { BlogPost, getAllBlogPosts } from '@/lib/blog';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTag, setSelectedTag] = useState<string>('');
-  const [allTags, setAllTags] = useState<string[]>([]);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     try {
-      const posts = getAllBlogPosts();
-      setBlogPosts(posts);
-      setFilteredPosts(posts);
+      setLoading(true);
+      setError(null);
       
-      // Extract all unique tags
-      const tags = Array.from(new Set(posts.flatMap(post => post.tags)));
-      setAllTags(tags);
-    } catch (error) {
-      console.error('Error loading blog posts:', error);
+      const posts = getAllBlogPosts();
+      console.log('Loaded blog posts:', posts);
+      setBlogPosts(posts);
+    } catch (err) {
+      console.error('Error loading blog posts:', err);
+      setError('ไม่สามารถโหลดบทความได้');
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => {
-    let filtered = blogPosts;
-
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.content.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Filter by tag
-    if (selectedTag) {
-      filtered = filtered.filter(post => post.tags.includes(selectedTag));
-    }
-
-    setFilteredPosts(filtered);
-  }, [blogPosts, searchTerm, selectedTag]);
-
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('th-TH', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
-  const handleTagClick = (tag: string) => {
-    setSelectedTag(selectedTag === tag ? '' : tag);
-  };
-
-  const clearFilters = () => {
-    setSearchTerm('');
-    setSelectedTag('');
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('th-TH', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    } catch (error) {
+      return dateString;
+    }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-        <Header />
-        <div className="container mx-auto px-4 py-16">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-400 border-t-transparent mx-auto mb-4"></div>
-            <h1 className="text-3xl font-bold text-white mb-4">กำลังโหลดบทความ...</h1>
-            <p className="text-gray-300">กรุณารอสักครู่</p>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-      <Header />
-      
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-transparent"></div>
-        <div className="absolute inset-0 opacity-10">
+      <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-20 w-32 h-32 border border-blue-400 rounded-full animate-pulse"></div>
           <div className="absolute top-40 right-32 w-24 h-24 border border-blue-400 rounded-full animate-pulse delay-100"></div>
           <div className="absolute bottom-32 left-32 w-40 h-40 border border-blue-400 rounded-full animate-pulse delay-200"></div>
         </div>
         
-        <div className="container mx-auto px-4 py-16 relative z-10">
-          <div className="mb-8">
-            <Button 
-              variant="ghost" 
-              className="text-white mb-6 hover:bg-blue-900/30 transition-colors"
-              onClick={() => window.history.back()}
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              กลับ
-            </Button>
-            
-            <div className="text-center max-w-4xl mx-auto">
-              <h1 className="text-5xl lg:text-6xl font-bold text-blue-400 mb-6 leading-tight">
-                บทความและข้อมูลข่าวสาร
-              </h1>
-              <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                อ่านบทความและเคล็ดลับเกี่ยวกับการสืบสวน การจ้างนักสืบ และบริการของเรา
-                พร้อมข้อมูลข่าวสารที่น่าสนใจในวงการสืบสวน
-              </p>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600/20 rounded-full mb-6">
+              <BookOpen className="w-8 h-8 text-blue-400" />
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-4">กำลังโหลดบทความ...</h2>
+            <div className="flex items-center justify-center space-x-2">
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce delay-100"></div>
+              <div className="w-3 h-3 bg-blue-400 rounded-full animate-bounce delay-200"></div>
             </div>
           </div>
+        </div>
+      </section>
+    );
+  }
 
-          {/* Search and Filters Section */}
-          <div className="max-w-4xl mx-auto mb-12">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700">
-              <div className="space-y-6">
-                {/* Search Bar */}
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <Input
-                    placeholder="ค้นหาบทความ เคล็ดลับ หรือข้อมูลที่สนใจ..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 pr-4 py-3 bg-slate-700/50 border-slate-600 text-white placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                  />
-                </div>
+  if (error) {
+    return (
+      <section className="py-20 bg-gradient-to-br from-slate-900 via-red-900/20 to-slate-900 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-32 h-32 border border-red-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-40 right-32 w-24 h-24 border border-red-400 rounded-full animate-pulse delay-100"></div>
+          <div className="absolute bottom-32 left-32 w-40 h-40 border border-red-400 rounded-full animate-pulse delay-200"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-md mx-auto">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-red-600/20 rounded-full mb-6">
+              <BookOpen className="w-8 h-8 text-red-400" />
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-4">เกิดข้อผิดพลาด</h2>
+            <p className="text-gray-300 mb-8 text-lg">{error}</p>
+            <Button 
+              onClick={() => window.location.reload()}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105"
+            >
+              <ArrowRight className="w-4 h-4 mr-2" />
+              ลองใหม่
+            </Button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
-                {/* Filter Controls */}
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <Filter className="w-4 h-4 text-gray-400" />
-                      <span className="text-gray-300 text-sm">หมวดหมู่:</span>
+  if (blogPosts.length === 0) {
+    return (
+      <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-32 h-32 border border-blue-400 rounded-full animate-pulse"></div>
+          <div className="absolute top-40 right-32 w-24 h-24 border border-blue-400 rounded-full animate-pulse delay-100"></div>
+          <div className="absolute bottom-32 left-32 w-40 h-40 border border-blue-400 rounded-full animate-pulse delay-200"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-md mx-auto">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600/20 rounded-full mb-6">
+              <BookOpen className="w-8 h-8 text-blue-400" />
+            </div>
+            <h2 className="text-4xl font-bold text-white mb-4">
+              บทความ<span className="text-blue-400">ล่าสุด</span>
+            </h2>
+            <p className="text-gray-300 text-lg">ยังไม่มีบทความ</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 w-32 h-32 border border-blue-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-32 w-24 h-24 border border-blue-400 rounded-full animate-pulse delay-100"></div>
+        <div className="absolute bottom-32 left-32 w-40 h-40 border border-blue-400 rounded-full animate-pulse delay-200"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-blue-400/30 rounded-full animate-pulse delay-300"></div>
+      </div>
+
+      {/* Gradient Orbs */}
+      <div className="absolute top-0 left-0 w-72 h-72 bg-blue-600/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-full mb-6 backdrop-blur-sm border border-blue-400/20">
+            <BookOpen className="w-8 h-8 text-blue-400" />
+          </div>
+          <h2 className="text-5xl font-bold text-white mb-6">
+            บทความ<span className="text-blue-400">ล่าสุด</span>
+          </h2>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            อ่านบทความและเคล็ดลับเกี่ยวกับการสืบสวน การจ้างนักสืบ และบริการของเรา
+            <br />
+            <span className="text-blue-400">อัพเดตความรู้ใหม่ๆ เพื่อความปลอดภัยของคุณ</span>
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogPosts.slice(0, 3).map((post, index) => (
+            <Card 
+              key={post.slug} 
+              className="bg-slate-800/60 backdrop-blur-sm border-slate-700/50 hover:border-blue-400/50 transition-all duration-500 hover:scale-105 animate-fade-in overflow-hidden group hover:shadow-2xl hover:shadow-blue-500/10"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
+              {/* Card Header with Gradient Overlay */}
+              <div className="relative bg-gradient-to-br from-slate-700/50 to-slate-800/50 p-6 border-b border-slate-600/50">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 text-sm text-gray-400 mb-4">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4 text-blue-400" />
+                      <span>{formatDate(post.date)}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant={viewMode === 'grid' ? "default" : "ghost"}
-                        size="sm"
-                        onClick={() => setViewMode('grid')}
-                        className="p-2"
-                      >
-                        <Grid className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant={viewMode === 'list' ? "default" : "ghost"}
-                        size="sm"
-                        onClick={() => setViewMode('list')}
-                        className="p-2"
-                      >
-                        <List className="w-4 h-4" />
-                      </Button>
+                    <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                    <div className="flex items-center gap-1">
+                      <User className="w-4 h-4 text-blue-400" />
+                      <span>{post.author}</span>
                     </div>
                   </div>
+                  
+                  <CardTitle className="text-white text-xl line-clamp-2 group-hover:text-blue-300 transition-colors duration-300 leading-tight">
+                    {post.title}
+                  </CardTitle>
                 </div>
+              </div>
 
-                {/* Tags */}
+              <CardContent className="p-6 space-y-4">
+                <CardDescription className="text-gray-300 line-clamp-3 leading-relaxed text-base">
+                  {post.excerpt}
+                </CardDescription>
+                
                 <div className="flex flex-wrap gap-2">
-                  {allTags.map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant={selectedTag === tag ? "default" : "secondary"}
-                      className={`cursor-pointer transition-all hover:scale-105 ${
-                        selectedTag === tag 
-                          ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30" 
-                          : "bg-slate-700/50 text-gray-300 hover:bg-slate-600 border border-slate-600"
-                      }`}
-                      onClick={() => handleTagClick(tag)}
+                  {post.tags.slice(0, 3).map((tag) => (
+                    <Badge 
+                      key={tag} 
+                      variant="secondary" 
+                      className="bg-blue-900/30 text-blue-300 border border-blue-700/50 hover:bg-blue-800/40 transition-colors"
                     >
                       <Tag className="w-3 h-3 mr-1" />
                       {tag}
                     </Badge>
                   ))}
+                  {post.tags.length > 3 && (
+                    <Badge 
+                      variant="secondary" 
+                      className="bg-slate-700/50 text-gray-400 border border-slate-600/50"
+                    >
+                      +{post.tags.length - 3}
+                    </Badge>
+                  )}
                 </div>
 
-                {/* Active Filters */}
-                {(searchTerm || selectedTag) && (
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-700">
-                    <div className="text-gray-300 text-sm">
-                      พบ {filteredPosts.length} บทความ
-                      {searchTerm && ` สำหรับ "${searchTerm}"`}
-                      {selectedTag && ` ในหมวดหมู่ "${selectedTag}"`}
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={clearFilters}
-                      className="border-slate-500 text-white hover:bg-slate-600 transition-colors"
-                    >
-                      ล้างตัวกรอง
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Blog Posts */}
-          {filteredPosts.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-12 border border-slate-700 max-w-md mx-auto">
-                <div className="w-16 h-16 bg-blue-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Search className="w-8 h-8 text-blue-400" />
+                <div className="pt-4">
+                  <Button 
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] group/btn"
+                    onClick={() => window.open(`/blog/${post.slug}`, '_blank')}
+                  >
+                    <span>อ่านเพิ่มเติม</span>
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-4">ไม่พบบทความ</h2>
-                <p className="text-gray-300 mb-6">
-                  ลองเปลี่ยนคำค้นหาหรือหมวดหมู่
-                </p>
-                <Button
-                  variant="outline"
-                  onClick={clearFilters}
-                  className="border-slate-500 text-white hover:bg-slate-600 transition-colors"
-                >
-                  ล้างตัวกรอง
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className={`${
-              viewMode === 'grid' 
-                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' 
-                : 'space-y-6'
-            }`}>
-              {filteredPosts.map((post, index) => (
-                <Card 
-                  key={post.slug} 
-                  className={`group bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:bg-slate-800/70 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-900/20 ${
-                    viewMode === 'list' ? 'flex flex-col md:flex-row' : ''
-                  }`}
-                  style={{
-                    animationDelay: `${index * 100}ms`,
-                    animation: 'fadeInUp 0.6s ease-out forwards'
-                  }}
-                >
-                  <CardHeader className={viewMode === 'list' ? 'md:flex-1' : ''}>
-                    <div className="flex items-center gap-2 text-sm text-gray-400 mb-3">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>{formatDate(post.date)}</span>
-                      </div>
-                      <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-                      <div className="flex items-center gap-1">
-                        <User className="w-4 h-4" />
-                        <span>{post.author}</span>
-                      </div>
-                    </div>
-                    <CardTitle className="text-white text-xl leading-tight group-hover:text-blue-400 transition-colors">
-                      {post.title}
-                    </CardTitle>
-                    <CardDescription className="text-gray-300 leading-relaxed">
-                      {post.excerpt}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className={viewMode === 'list' ? 'md:w-80' : ''}>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <Badge 
-                          key={tag} 
-                          variant="secondary" 
-                          className="bg-slate-700/50 text-gray-300 border border-slate-600 hover:bg-blue-900/30 transition-colors"
-                        >
-                          <Tag className="w-3 h-3 mr-1" />
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-slate-500 text-white hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 group-hover:scale-105"
-                      onClick={() => window.open(`/blog/${post.slug}`, '_blank')}
-                    >
-                      อ่านเพิ่มเติม
-                      <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </div>
 
-      <Footer />
-      
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-    </div>
+        {blogPosts.length > 3 && (
+          <div className="text-center mt-12 animate-fade-in" style={{ animationDelay: '600ms' }}>
+            <Button 
+              size="lg"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 group border-0"
+              onClick={() => window.open('/blog', '_blank')}
+            >
+              <BookOpen className="w-5 h-5 mr-2" />
+              <span>ดูบทความทั้งหมด</span>
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 
