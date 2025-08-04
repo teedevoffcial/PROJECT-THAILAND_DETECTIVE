@@ -8,6 +8,7 @@ import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import YouTubeSection from "@/components/YoutubeSection";
+import Blog from "@/components/Blog";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <SpecialServices />
       <WorkTypes />
       <YouTubeSection/>
+      <Blog />
       <About />
       <Contact />
       <Footer />
