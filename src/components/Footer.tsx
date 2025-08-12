@@ -62,7 +62,6 @@ const Footer = () => {
         <div className="border-t border-slate-800 mt-8 pt-8 text-center">
           <p className="text-slate-400">
             © 2024 Thailand-Detective. สงวนลิขสิทธิ์ทุกประการ | 
-            <span className="text-blue-400"> ใบอนุญาตสายสืบเลขที่ 12345/2567</span>
           </p>
         </div>
       </div>
