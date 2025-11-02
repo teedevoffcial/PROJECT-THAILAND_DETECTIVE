@@ -75,46 +75,6 @@ const About = () => {
               ))}
             </div>
           </div>
-
-          <div className="relative animate-fade-in delay-300">
-            <Card className="bg-slate-800/50 border-slate-700 p-8 hover:scale-105 transition-transform">
-              <CardContent className="space-y-6">
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold text-white mb-4">
-                    สถิติความสำเร็จ
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center hover:scale-110 transition-transform">
-                    <div className="text-4xl font-bold text-blue-400 mb-2">500+</div>
-                    <div className="text-slate-300">คดีที่สำเร็จ</div>
-                  </div>
-                  <div className="text-center hover:scale-110 transition-transform">
-                    <div className="text-4xl font-bold text-blue-400 mb-2">98%</div>
-                    <div className="text-slate-300">ความแม่นยำ</div>
-                  </div>
-                  <div className="text-center hover:scale-110 transition-transform">
-                    <div className="text-4xl font-bold text-blue-400 mb-2">100%</div>
-                    <div className="text-slate-300">รักษาความลับ</div>
-                  </div>
-                  <div className="text-center hover:scale-110 transition-transform">
-                    <div className="text-4xl font-bold text-blue-400 mb-2">15+</div>
-                    <div className="text-slate-300">ปีประสบการณ์</div>
-                  </div>
-                </div>
-
-                <div className="bg-blue-900/30 p-6 rounded-lg text-center hover:scale-105 transition-transform">
-                  <p className="text-slate-300 italic">
-                    "ความไว้วางใจของลูกค้าคือสิ่งสำคัญที่สุดสำหรับเรา"
-                  </p>
-                  <div className="text-blue-400 font-semibold mt-2">
-                    - ทีม Thailand-Detective
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </div>
     </section>
